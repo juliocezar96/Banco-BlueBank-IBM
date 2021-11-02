@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value ="/cliente")
 public class ClienteController {
 
-    @GetMapping
-    public ResponseEntity<Cliente> findAll(){
+  //  @GetMapping
+//    public ResponseEntity<Cliente> findAll(){
 
-        Cliente cliente = new Cliente(1L,"Julio","81999999999","julio@teste.com","11122233301",
-                new Conta(1L, 11, 1) );
+        //Cliente cliente = new Cliente(1L,"Julio","81999999999","julio@teste.com","11122233301",
+          //      new Conta(1L, 11, 1) );
 
-        return ResponseEntity.ok().body(cliente);
-    }
+        //return ResponseEntity.ok().body(cliente);
+//    }
 }

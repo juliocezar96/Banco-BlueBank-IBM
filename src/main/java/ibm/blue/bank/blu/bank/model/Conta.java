@@ -15,13 +15,15 @@ public class Conta {
     private Long id;
     private int numero;
     private int digito;
+    private double saldo;
     @OneToOne
     private Cliente cliente;
 
-
-    public Conta(Long id, int numero, int digito) {
+    public Conta(Long id, int numero, int digito, double saldo) {
         this.id = id;
         this.numero = numero;
         this.digito = digito;
+        this.saldo = saldo;
+
     }
 }

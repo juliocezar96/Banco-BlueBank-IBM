@@ -18,6 +18,10 @@ public class Conta {
     private double saldo;
     @OneToOne
     private Cliente cliente;
+    
+    @OneToOne
+    private Transacao transacao;
+   
 
     public Conta(Long id, int numero, int digito, double saldo) {
         this.id = id;
@@ -26,4 +30,6 @@ public class Conta {
         this.saldo = saldo;
 
     }
+    
+    
 }

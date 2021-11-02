@@ -18,13 +18,13 @@ public class ClienteController {
     @Autowired
     ClienteService clienteService;
 
-    @GetMapping
-    public ResponseEntity<Cliente> findAll(){
+    //@GetMapping
+    //public ResponseEntity<Cliente> findAll(){
 
-        Cliente cliente = new Cliente(1L,"Julio","81999999999","julio@teste.com","11122233301",
-                new Conta(1L, 11, 1,1.000));
+        //Cliente cliente = new Cliente(1L,"Julio","81999999999","julio@teste.com","11122233301",
+          //      new Conta(1L, 11, 1,1.000));
 
 
-        return ResponseEntity.ok().body(cliente);
-    }
+//        return ResponseEntity.ok().body(cliente);
+   // }
 }

@@ -8,8 +8,6 @@ import java.sql.Date;
 
 @Data
 @EqualsAndHashCode
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name= "TB_TRANSACAO")
 public class Transacao implements Serializable {
@@ -22,6 +20,9 @@ public class Transacao implements Serializable {
     private String data;
     private Double valor;
     private int contaDestino;
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "transacao",targetEntity = Conta.class, fetch = FetchType.EAGER)
+    @JoinColumn(name="CONTA_ID")
+    private Conta conta;
     
 	public Transacao(Long id, String data, Double valor, int contaDestino) {
 		super();
@@ -31,8 +32,5 @@ public class Transacao implements Serializable {
 		this.contaDestino = contaDestino;
 	}
     
-    
-   // @ManyToOne(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "transacao",targetEntity = Conta.class, fetch = FetchType.EAGER)
-    //@JoinColumn(name="CONTA_ID")
     
 }

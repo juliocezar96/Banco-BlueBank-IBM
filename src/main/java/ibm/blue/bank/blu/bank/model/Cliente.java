@@ -5,12 +5,12 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Getter
-@Setter
+@Data
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name= "TB_CLIENTE")
 public class Cliente implements Serializable {
 
     private static  final long serialVersionUID = 1L;
@@ -22,10 +22,9 @@ public class Cliente implements Serializable {
     private String telefone;
     private String email;
     private String cpf;
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "cliente", fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "cliente",targetEntity = Conta.class, fetch = FetchType.EAGER)
+    @JoinColumn(name="CONTA_ID")
     private Conta conta;
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "cliente", fetch = FetchType.EAGER)
-    private Agencia agencia;
 
 
 }

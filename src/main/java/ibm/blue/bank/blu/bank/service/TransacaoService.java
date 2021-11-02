@@ -12,12 +12,12 @@ import ibm.blue.bank.blu.bank.repository.TransacaoRepository;
 
 @Service
 public class TransacaoService {
+
 	@Autowired
 	TransacaoRepository transacaoRepository; 
-	
-	List<Transacao> transacoes = transacaoRepository.findAll();//Busca no banco 
 
 	public List<Transacao> getTransacoes() {
+		List<Transacao> transacoes = transacaoRepository.findAll();//Busca no banco
 		return transacoes;
 	}
 

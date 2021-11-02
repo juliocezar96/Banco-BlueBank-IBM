@@ -23,11 +23,12 @@ public class Conta {
     private Transacao transacao;
    
 
-    public Conta(Long id, int numero, int digito, double saldo) {
+    public Conta(Long id, int numero, int digito, double saldo, Cliente cliente) {
         this.id = id;
         this.numero = numero;
         this.digito = digito;
         this.saldo = saldo;
+        this.cliente = cliente;
 
     }
     

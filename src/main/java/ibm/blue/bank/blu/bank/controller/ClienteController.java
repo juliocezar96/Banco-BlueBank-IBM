@@ -1,35 +1,33 @@
 package ibm.blue.bank.blu.bank.controller;
 
 import ibm.blue.bank.blu.bank.model.Cliente;
-import ibm.blue.bank.blu.bank.model.Conta;
+import ibm.blue.bank.blu.bank.repository.ClienteRepository;
+import ibm.blue.bank.blu.bank.repository.ContaRepository;
 import ibm.blue.bank.blu.bank.service.ClienteService;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import ibm.blue.bank.blu.bank.service.ContaService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-
 @RestController
-@RequestMapping(value ="/cliente")
+@RequestMapping(value = "/cliente")
 public class ClienteController {
 
     @Autowired
     ClienteService clienteService;
 
 
-    @GetMapping(value = "/listatodos")
+    @GetMapping
     @ResponseBody //Retorna os dados para o corpo
-    public ResponseEntity<List<Cliente>> listaClientes(){
-    		return new ResponseEntity<List<Cliente>>(clienteService.getCliente(), HttpStatus.OK);
-    }
+    public ResponseEntity<List<Cliente>> listaClientes() {
 
+//        Cliente cliente = new Cliente(null, "mateus", "9999999", "mateus@gmail.com", "99999999");
+//        Conta conta = new Conta(null, 1, 1, 100, cliente);
+//        contaRepository.save(conta);
+
+        List<Cliente> clientes = clienteService.getCliente();
+        return ResponseEntity.ok().body(clientes);
+    }
 
 }

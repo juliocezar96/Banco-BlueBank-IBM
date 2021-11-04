@@ -1,14 +1,11 @@
 package ibm.blue.bank.blu.bank.model;
 
-import lombok.*;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Data
-@EqualsAndHashCode
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name= "TB_CLIENTE")
 public class Cliente implements Serializable {
@@ -17,14 +14,25 @@ public class Cliente implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private Long id;
+    @Column(name = "NOME")
     private String nome;
+    @Column(name = "TELEFONE")
     private String telefone;
+    @Column(name = "EMAIL")
     private String email;
+    @Column(name = "CPF")
     private String cpf;
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "cliente",targetEntity = Conta.class, fetch = FetchType.EAGER)
-    @JoinColumn(name="CONTA_ID")
-    private Conta conta;
 
+    public Cliente() {
+    }
 
+    public Cliente(Long id, String nome, String telefone, String email, String cpf) {
+        this.id = id;
+        this.nome = nome;
+        this.telefone = telefone;
+        this.email = email;
+        this.cpf = cpf;
+    }
 }

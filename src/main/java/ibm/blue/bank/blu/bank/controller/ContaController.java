@@ -1,8 +1,6 @@
 package ibm.blue.bank.blu.bank.controller;
 
-import ibm.blue.bank.blu.bank.model.Cliente;
 import ibm.blue.bank.blu.bank.model.Conta;
-import ibm.blue.bank.blu.bank.service.ClienteService;
 import ibm.blue.bank.blu.bank.service.ContaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,29 +10,29 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value ="/conta")
+@RequestMapping(value = "/conta")
 public class ContaController {
 
     @Autowired
-    ClienteService clienteService;
-    @Autowired
     ContaService contaService;
 
-    @GetMapping(value = "/conta/listatodos")
-    @ResponseBody
-    public ResponseEntity<List<Conta>> listaContas(){
+    @GetMapping
+    public ResponseEntity<List<Conta>> listaContas() {
+
+//        Cliente cliente = new Cliente(null, "mateus", "9999999", "mateus@gmail.com", "99999999");
+//        Conta conta = new Conta(null, 1, 1, 100, cliente);
+//        contaRepository.save(conta);
         return new ResponseEntity<List<Conta>>(contaService.getContas(), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Conta> cadastrar(@RequestBody Cliente cliente){
+    public ResponseEntity<Conta> cadastrar(@RequestBody Conta conta) {
 
-        Conta contaResult =  contaService.cadastrar(cliente);
+        conta = this.contaService.cadastrar(conta);
 
-        return ResponseEntity.ok().body(contaResult);
+        return ResponseEntity.ok().body(conta);
 
     }
-
 
 
 }

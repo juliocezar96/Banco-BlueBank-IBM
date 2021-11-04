@@ -1,10 +1,11 @@
 package ibm.blue.bank.blu.bank.model;
 
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 @Data
 @EqualsAndHashCode
@@ -17,20 +18,23 @@ public class Transacao implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String data;
+    private Date data;
     private Double valor;
-    private int contaDestino;
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "transacao",targetEntity = Conta.class, fetch = FetchType.EAGER)
-    @JoinColumn(name="CONTA_ID")
-    private Conta conta;
-    
-	public Transacao(Long id, String data, Double valor, int contaDestino) {
-		super();
-		this.id = id;
-		this.data = data;
-		this.valor = valor;
-		this.contaDestino = contaDestino;
-	}
-    
-    
+    @OneToOne
+    @JoinColumn(name="CONTA_DESTINO_ID")
+    private Conta contaDestino;
+    @OneToOne
+    @JoinColumn(name="CONTA_ID", referencedColumnName = "ID")
+    private Conta contaOrigem ;
+
+    public Transacao() {
+    }
+
+    public Transacao(Long id, Date data, Double valor, Conta contaDestino, Conta contaOrigem) {
+        this.id = id;
+        this.data = data;
+        this.valor = valor;
+        this.contaDestino = contaDestino;
+        this.contaOrigem = contaOrigem;
+    }
 }

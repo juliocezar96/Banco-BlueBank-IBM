@@ -21,11 +21,6 @@ public class ClienteController {
     @GetMapping
     @ResponseBody //Retorna os dados para o corpo
     public ResponseEntity<List<Cliente>> listaClientes() {
-
-//        Cliente cliente = new Cliente(null, "mateus", "9999999", "mateus@gmail.com", "99999999");
-//        Conta conta = new Conta(null, 1, 1, 100, cliente);
-//        contaRepository.save(conta);
-
         List<Cliente> clientes = clienteService.getCliente();
         return ResponseEntity.ok().body(clientes);
     }

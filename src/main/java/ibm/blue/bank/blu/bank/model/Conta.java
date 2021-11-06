@@ -2,6 +2,7 @@ package ibm.blue.bank.blu.bank.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -24,6 +25,7 @@ public class Conta implements Serializable {
     private double saldo;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="CLIENTE_ID" , referencedColumnName = "ID")
+    @NonNull
     private Cliente cliente;
 
 

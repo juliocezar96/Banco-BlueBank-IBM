@@ -5,11 +5,14 @@ import ibm.blue.bank.blu.bank.model.Conta;
 import ibm.blue.bank.blu.bank.model.Transacao;
 import ibm.blue.bank.blu.bank.repository.TransacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -20,22 +23,28 @@ public class TransacaoService {
     private TransacaoRepository transacaoRepository;
 
 
-    public String gerarTransacao(Double valor, Conta contaOrigem, Conta contaDestino) throws Exception {
+    public ResponseEntity<Transacao>  gerarTransacao(Double valor, Long idContaOrigem, Long idContaDestino) throws Exception {
 
-        if (transferirValor(valor, contaOrigem, contaDestino)) {
-            Date date = new Date();
-            SimpleDateFormat formato = new SimpleDateFormat("dd/mm/yyyy");
-            formato.format(date);
+        Optional<Conta> contaOrigem = contaService.getConta(idContaOrigem);
+        Optional<Conta> contaDestino = contaService.getConta(idContaDestino);
+
+        if (contaOrigem.isPresent() && contaDestino.isPresent()) {
+            if (transferirValor(valor, contaOrigem.get(), contaDestino.get())) {
+                Date date = new Date();
+                SimpleDateFormat formato = new SimpleDateFormat("dd/mm/yyyy");
+                formato.format(date);
 
 
-            Transacao transacao = new Transacao(null, date, valor, contaDestino, contaOrigem);
-            transacaoRepository.save(transacao);
-            return "transferencia realizada com sucesso";
+                Transacao transacao = new Transacao(null, date, valor, contaDestino.get(), contaOrigem.get());
+                return ResponseEntity.created(new URI("/transacao")).body(transacaoRepository.save(transacao));
 
-        } else {
-            return "Saldo insuficiente para realizar transferencia";
+            } else {
+                return ResponseEntity.badRequest().build();
+            }
+
+
         }
-
+        return ResponseEntity.badRequest().build();
 
     }
 

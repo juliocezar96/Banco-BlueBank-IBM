@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
@@ -17,18 +19,14 @@ public class TransacaoController {
     private TransacaoService transacaoService;
 
 
-    @PutMapping("/{valor}")
-    public ResponseEntity<String> transferencia(@PathVariable Double valor, @RequestBody List<Conta> contas) {
-        try {
-            return ResponseEntity.ok().body(transacaoService.gerarTransacao(valor, contas.get(0), contas.get(1)));
+    @PostMapping
+    public ResponseEntity<Transacao> transferencia(@RequestParam("valor") Double valor, @RequestParam("origem") Long idContaOrigem, @RequestParam("destino") Long idContaDestino) throws Exception {
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.badRequest().build();
-        }
+        return transacaoService.gerarTransacao(valor, idContaOrigem, idContaDestino);
+
     }
 
-    @GetMapping(value = "/listatodos")
+    @GetMapping
     public ResponseEntity<List<Transacao>> listaTransacoes() {
         return new ResponseEntity<List<Transacao>>(transacaoService.getTransacoes(), HttpStatus.OK);
     }

@@ -25,14 +25,15 @@ public class ContaController {
 
     @PostMapping
     public ResponseEntity<Conta> cadastrar(@RequestBody Conta conta) throws URISyntaxException {
-        if (conta.getSaldo() == 0 || conta.getCliente().equals(null)) {
-            return ResponseEntity.badRequest().build();
+
+        if ((conta.getSaldo() == null) ||(conta.getDigito() == null) || (conta.getNumero() == null) || (conta.getCliente() == null)) {
+            return ResponseEntity.badRequest().body(conta);
+        }else if((conta.getCliente().getCpf() ==null) || (conta.getCliente().getNome() == null ) || (conta.getCliente().getTelefone() == null) || (conta.getCliente().getEndereco() == null) ){
+            return ResponseEntity.badRequest().body(conta);
+        }else {
+            conta = contaService.cadastrar(conta);
+
+            return ResponseEntity.created(new URI("/conta")).body(conta);
         }
-        conta = contaService.cadastrar(conta);
-
-        return ResponseEntity.created(new URI("/conta")).body(conta);
-
     }
-
-
 }

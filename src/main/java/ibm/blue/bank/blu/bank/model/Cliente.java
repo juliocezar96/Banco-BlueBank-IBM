@@ -1,11 +1,16 @@
 package ibm.blue.bank.blu.bank.model;
 
+import com.sun.istack.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name= "TB_CLIENTE")
 public class Cliente implements Serializable {
@@ -16,23 +21,19 @@ public class Cliente implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Long id;
+    @NotNull
     @Column(name = "NOME")
     private String nome;
+    @NotNull
     @Column(name = "TELEFONE")
     private String telefone;
     @Column(name = "EMAIL")
     private String email;
+    @NotNull
     @Column(name = "CPF")
     private String cpf;
+    @NotNull
+    @Column(name = "ENDERECO")
+    private String endereco;
 
-    public Cliente() {
-    }
-
-    public Cliente(Long id, String nome, String telefone, String email, String cpf) {
-        this.id = id;
-        this.nome = nome;
-        this.telefone = telefone;
-        this.email = email;
-        this.cpf = cpf;
-    }
 }

@@ -13,9 +13,9 @@ public class ClienteService {
     @Autowired
     private ClienteRepository clienteRepository;
 
-
+    //lista todos os Clentes
     public List<Cliente> getCliente() {
-        List<Cliente> clientes = clienteRepository.findAll();//Busca no banco
+        List<Cliente> clientes = clienteRepository.findAll();
         return clientes;
     }
 

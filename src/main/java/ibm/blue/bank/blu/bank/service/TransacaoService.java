@@ -23,31 +23,41 @@ public class TransacaoService {
     private TransacaoRepository transacaoRepository;
 
 
+    //Gera uma transação apartir de transferencia entre contas
     public ResponseEntity<Transacao>  gerarTransacao(Double valor, Long idContaOrigem, Long idContaDestino) throws Exception {
 
         Optional<Conta> contaOrigem = contaService.getConta(idContaOrigem);
         Optional<Conta> contaDestino = contaService.getConta(idContaDestino);
 
+        Date date = new Date();
+        SimpleDateFormat formato = new SimpleDateFormat("dd/mm/yyyy");
+        formato.format(date);
+
+        Transacao transacao = new Transacao();
+        transacao.setData(date);
+        transacao.setValor(valor);
+
         if (contaOrigem.isPresent() && contaDestino.isPresent()) {
+            transacao.setContaDestino(contaDestino.get());
+            transacao.setContaOrigem(contaOrigem.get());
             if (transferirValor(valor, contaOrigem.get(), contaDestino.get())) {
-                Date date = new Date();
-                SimpleDateFormat formato = new SimpleDateFormat("dd/mm/yyyy");
-                formato.format(date);
 
 
-                Transacao transacao = new Transacao(null, date, valor, contaDestino.get(), contaOrigem.get());
-                return ResponseEntity.created(new URI("/transacao")).body(transacaoRepository.save(transacao));
+                transacao = transacaoRepository.save(transacao);
+
+                return ResponseEntity.created(new URI("/transacao")).body(transacao);
 
             } else {
-                return ResponseEntity.badRequest().build();
+                return ResponseEntity.badRequest().body(transacao);
             }
 
 
         }
-        return ResponseEntity.badRequest().build();
+        return ResponseEntity.badRequest().body(transacao);
 
     }
 
+    //Realiza transferencia de valores de sados entre contas
     public Boolean transferirValor(Double valor, Conta contaOrigem, Conta contaDestino) throws Exception {
         if (valor <= contaOrigem.getSaldo()) {
             contaOrigem.setSaldo(contaOrigem.getSaldo() - valor);
@@ -64,6 +74,7 @@ public class TransacaoService {
 
     }
 
+    //Lista todas as Transações
     public List<Transacao> getTransacoes() {
         List<Transacao> transacoes = transacaoRepository.findAll();//Busca no banco
         return transacoes;

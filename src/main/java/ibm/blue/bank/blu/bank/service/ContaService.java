@@ -15,16 +15,19 @@ public class ContaService {
     @Autowired
     private ContaRepository contaRepository;
 
+    // Lista todas as Contas
     public List<Conta> getContas() {
         List<Conta> contas = contaRepository.findAll();
         return contas;
     }
 
+    // busca uma conta pelo ID
     public Optional<Conta> getConta(Long id) {
         Optional<Conta> contas = contaRepository.findById(id);
         return contas;
     }
 
+    // Cria uma conta
     public Conta cadastrar(Conta conta) {
 
         return contaRepository.save(conta);
